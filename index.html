@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Uy Tín Hàng Đầu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0b0e1a;
+            --card-bg: #161b33;
+            --accent-color: #7d5fff;
+            --text-color: #ffffff;
+            --neon-pink: #ff00ff;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container { max-width: 600px; margin: auto; }
+
+        /* Header section */
+        .header-card {
+            background: linear-gradient(145deg, #1e2448, #161b33);
+            padding: 20px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            border: 1px solid var(--accent-color);
+        }
+
+        .balance-box {
+            display: flex;
+            justify-content: space-between;
+            background: rgba(255,255,255,0.05);
+            padding: 10px 20px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+        }
+
+        /* Product section */
+        .section-title {
+            font-size: 1.2rem;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .product-info { padding: 15px; }
+
+        .price {
+            color: #00ff88;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .btn-buy {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        /* Admin Panel */
+        #admin-panel {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #1e2448;
+            padding: 25px;
+            border-radius: 15px;
+            border: 2px solid var(--neon-pink);
+            z-index: 1000;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background: #0b0e1a;
+            border: 1px solid var(--accent-color);
+            color: white;
+            box-sizing: border-box;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top:0; left:0; width:100%; height:100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 999;
+        }
+
+        .description-box {
+            font-size: 0.85rem;
+            color: #aaa;
+            margin-top: 10px;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-card">
+        <div class="balance-box">
+            <span>Số dư: <b id="user-balance">500.000</b>đ</span>
+            <i class="fas fa-wallet"></i>
+        </div>
+        <h2 style="margin: 10px 0;">SHOP UY TÍN HÀNG ĐẦU</h2>
+        <p style="font-size: 0.9rem; opacity: 0.8;">Chào mừng <b>Vinh</b> quay trở lại!</p>
+        <button onclick="showAdmin()" style="background:none; border:none; color:#333; font-size:10px;">Admin Mode</button>
+    </div>
+
+    <div class="section-title">
+        <i class="fas fa-boxes"></i> DANH MỤC MENU UPDATE
+    </div>
+
+    <div id="product-list">
+        <div class="product-card">
+            <div class="product-info">
+                <h3>Acc Lv5 Google</h3>
+                <span class="price">2.500đ</span>
+                <p class="description-box">Tài khoản Clone cấp độ 5 phục vụ test menu.</p>
+                <button class="btn-buy" onclick="buyProduct('acc_lv5', 2500)">MUA NGAY</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="https://i.imgur.com/your-purple-cup-link.jpg" alt="Drip Silent" class="product-img" onerror="this.src='https://via.placeholder.com/400x180/7d5fff/ffffff?text=DRIP+SILENT'">
+            <div class="product-info">
+                <h3>Drip Silent (Purple Cup)</h3>
+                <span class="price">150.000đ</span>
+                <p class="description-box">Menu antiband update thường xuyên. Lưu ý: Log acc clone trước, nếu không ban mới log acc chính. Nhớ đăng xuất khi off.</p>
+                <button class="btn-buy" onclick="buyProduct('drip', 150000)">MUA NGAY</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="https://i.imgur.com/your-gameplay-link.jpg" alt="Zygame" class="product-img" onerror="this.src='https://via.placeholder.com/400x180/00ff88/ffffff?text=ZYGAME+PLAYING'">
+            <div class="product-info">
+                <h3>Zygame VIP</h3>
+                <span class="price">200.000đ</span>
+                <p class="description-box">Menu antiband update thường xuyên. Lưu ý: Log acc clone trước, nếu không ban mới log acc chính. Nhớ đăng xuất khi off.</p>
+                <button class="btn-buy" onclick="buyProduct('zygame', 200000)">MUA NGAY</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+<div id="admin-panel">
+    <h3 style="color: var(--neon-pink); text-align: center;">QUẢN TRỊ VIÊN</h3>
+    <label>Chọn mặt hàng:</label>
+    <select id="admin-product-select">
+        <option value="acc_lv5">Acc Lv5 Google</option>
+        <option value="drip">Drip Silent</option>
+        <option value="zygame">Zygame VIP</option>
+    </select>
+    <label>Nhập Key (Mỗi key 1 dòng):</label>
+    <textarea id="admin-key-input" rows="5" style="width:100%; background:#000; color:#0f0; border:1px solid #7d5fff;"></textarea>
+    <button class="btn-buy" style="background: #2ecc71;" onclick="addStock()">CẬP NHẬT KHO</button>
+    <button class="btn-buy" style="background: #e74c3c;" onclick="hideAdmin()">ĐÓNG</button>
+</div>
+
+<script>
+    // Khởi tạo kho hàng nếu chưa có
+    if(!localStorage.getItem('shop_stock')) {
+        localStorage.setItem('shop_stock', JSON.stringify({
+            acc_lv5: [],
+            drip: [],
+            zygame: []
+        }));
+    }
+
+    let balance = 500000;
+
+    function showAdmin() {
+        document.getElementById('admin-panel').style.display = 'block';
+        document.getElementById('overlay').style.display = 'block';
+    }
+
+    function hideAdmin() {
+        document.getElementById('admin-panel').style.display = 'none';
+        document.getElementById('overlay').style.display = 'none';
+    }
+
+    // Admin thêm hàng vào kho
+    function addStock() {
+        const type = document.getElementById('admin-product-select').value;
+        const keysText = document.getElementById('admin-key-input').value.trim();
+        
+        if(!keysText) return alert("Vui lòng nhập Key!");
+
+        let stock = JSON.parse(localStorage.getItem('shop_stock'));
+        const newKeys = keysText.split('\n').filter(k => k.trim() !== "");
+        
+        stock[type] = [...stock[type], ...newKeys];
+        localStorage.setItem('shop_stock', JSON.stringify(stock));
+        
+        alert(`Đã thêm ${newKeys.length} mặt hàng vào kho!`);
+        document.getElementById('admin-key-input').value = "";
+        hideAdmin();
+    }
+
+    // Khách hàng mua hàng
+    function buyProduct(type, price) {
+        if (balance < price) {
+            alert("Bạn không đủ tiền! Vui lòng nạp thêm.");
+            return;
+        }
+
+        let stock = JSON.parse(localStorage.getItem('shop_stock'));
+        
+        if (!stock[type] || stock[type].length === 0) {
+            alert("Mặt hàng này hiện đang hết hàng!");
+            return;
+        }
+
+        // Lấy key đầu tiên
+        const purchasedKey = stock[type].shift(); 
+        
+        // Cập nhật lại kho (Xóa key vừa mua)
+        localStorage.setItem('shop_stock', JSON.stringify(stock));
+
+        // Trừ tiền
+        balance -= price;
+        document.getElementById('user-balance').innerText = balance.toLocaleString();
+
+        // Hiển thị Key cho khách (Chỉ hiện 1 lần này)
+        alert(`MUA THÀNH CÔNG!\nKey của bạn là: ${purchasedKey}\n\nLưu ý: Key này chỉ xuất hiện 1 lần, hãy lưu lại ngay!`);
+        console.log("Key đã mua:", purchasedKey);
+    }
+</script>
+
+</body>
+</html>
