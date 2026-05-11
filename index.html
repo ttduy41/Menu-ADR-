@@ -3,284 +3,283 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cyber Shop - Đỗ Hoàng Vinh</title>
+    <title>SHADOW UPDATE - Đỗ Hoàng Vinh</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --bg: #0d1117; --card: #161b22; --accent: #8957e5; --text: #c9d1d9; --pink: #da36a8; --green: #238636;
+            --bg: #0b0e14; --card: #151921; --accent: #9d4edd; --text: #e0e1dd; --pink: #ff006e; --green: #38b000; --blue: #4cc9f0;
         }
-        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; justify-content: center; }
-        .app { width: 100%; max-width: 480px; padding: 15px; min-height: 100vh; }
+        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; display: flex; justify-content: center; }
+        .app { width: 100%; max-width: 500px; padding: 15px; min-height: 100vh; }
         
-        /* Auth Styles */
-        .auth-container { background: var(--card); padding: 25px; border-radius: 15px; border: 1px solid var(--accent); margin-top: 50px; }
-        .auth-tabs { display: flex; margin-bottom: 20px; border-bottom: 1px solid #30363d; }
-        .tab { flex: 1; text-align: center; padding: 10px; cursor: pointer; opacity: 0.5; }
-        .tab.active { opacity: 1; border-bottom: 2px solid var(--accent); color: var(--accent); }
+        /* Giao diện Đăng nhập */
+        .auth-box { background: var(--card); padding: 30px; border-radius: 20px; border: 1px solid var(--accent); margin-top: 60px; box-shadow: 0 0 20px rgba(157, 78, 221, 0.2); }
+        .auth-tabs { display: flex; margin-bottom: 25px; border-bottom: 1px solid #2d3139; }
+        .tab { flex: 1; text-align: center; padding: 12px; cursor: pointer; transition: 0.3s; opacity: 0.5; font-weight: bold; }
+        .tab.active { opacity: 1; border-bottom: 3px solid var(--accent); color: var(--accent); }
 
-        /* Shop Styles */
-        .header { background: linear-gradient(135deg, #1e2448, #161b33); padding: 20px; border-radius: 20px; border: 1px solid var(--accent); margin-bottom: 20px; }
-        .balance-card { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.3); padding: 12px; border-radius: 12px; }
+        /* Giao diện Shop */
+        .header-panel { background: linear-gradient(145deg, #1a1f2b, #11151c); padding: 25px; border-radius: 25px; border: 1px solid var(--accent); margin-bottom: 25px; position: relative; }
+        .balance-info { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.4); padding: 15px; border-radius: 15px; border: 1px solid #2d3139; }
         
-        .product-card { background: var(--card); border-radius: 15px; overflow: hidden; margin-bottom: 20px; border: 1px solid #30363d; transition: 0.3s; }
-        .product-card:hover { border-color: var(--accent); }
-        .product-img { width: 100%; height: 180px; object-fit: cover; }
-        .p-content { padding: 15px; }
-        .price { color: #58a6ff; font-size: 1.3rem; font-weight: bold; margin: 10px 0; }
-        .desc { font-size: 13px; color: #8b949e; line-height: 1.5; }
+        .product-item { background: var(--card); border-radius: 18px; overflow: hidden; margin-bottom: 25px; border: 1px solid #2d3139; position: relative; }
+        .product-img { width: 100%; height: 200px; object-fit: cover; filter: brightness(0.8); }
+        .product-details { padding: 18px; }
+        .item-name { font-size: 1.1rem; font-weight: 800; color: var(--blue); text-transform: uppercase; }
+        .price-tag { color: #fff; font-size: 1.4rem; font-weight: bold; margin: 12px 0; display: block; }
+        .item-desc { font-size: 13px; color: #94a3b8; line-height: 1.6; font-style: italic; }
 
-        input, select, textarea { width: 100%; padding: 12px; margin: 8px 0; background: #010409; border: 1px solid #30363d; color: white; border-radius: 8px; box-sizing: border-box; }
-        .btn { width: 100%; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
-        .btn-buy { background: var(--accent); color: white; }
-        .btn-admin { background: none; color: var(--pink); border: 1px solid var(--pink); font-size: 11px; padding: 4px 8px; width: auto; }
+        input, select, textarea { width: 100%; padding: 14px; margin: 10px 0; background: #010409; border: 1px solid #30363d; color: white; border-radius: 10px; font-size: 14px; }
+        .btn-main { width: 100%; padding: 14px; border: none; border-radius: 10px; cursor: pointer; font-weight: 800; text-transform: uppercase; transition: 0.2s; }
+        .btn-buy { background: var(--accent); color: white; box-shadow: 0 4px 15px rgba(157, 78, 221, 0.4); }
+        .btn-buy:active { transform: scale(0.98); }
+        .admin-badge { background: none; color: var(--pink); border: 1px solid var(--pink); font-size: 10px; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
 
-        /* Admin Modal */
-        .modal-bg { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.9); z-index: 100; }
-        .modal { display: none; position: fixed; top:50%; left:50%; transform: translate(-50%, -50%); background: var(--card); padding: 20px; border-radius: 15px; width: 90%; max-width: 400px; z-index: 101; border: 1px solid var(--accent); max-height: 85vh; overflow-y: auto; }
-        .req-card { background: #0d1117; padding: 12px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid var(--accent); font-size: 13px; }
-        .copy-icon { color: #58a6ff; cursor: pointer; margin-left: 5px; }
+        /* Modal */
+        .overlay { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.85); z-index: 100; backdrop-filter: blur(5px); }
+        .modal-content { display: none; position: fixed; top:50%; left:50%; transform: translate(-50%, -50%); background: var(--card); padding: 25px; border-radius: 20px; width: 85%; max-width: 400px; z-index: 101; border: 1px solid var(--accent); }
+        .admin-scroll { max-height: 400px; overflow-y: auto; margin-top: 15px; }
+        .log-card { background: #0b0e14; padding: 15px; border-radius: 12px; margin-bottom: 12px; border-left: 4px solid var(--blue); }
     </style>
 </head>
 <body>
 
 <div class="app">
-    <div id="auth-page">
-        <div class="auth-container">
-            <h2 style="text-align: center; color: var(--accent);">CYBER SHOP</h2>
+    <div id="auth-screen">
+        <div class="auth-box">
+            <h2 style="text-align: center; color: var(--accent); letter-spacing: 2px;">SHADOW MENU</h2>
             <div class="auth-tabs">
-                <div class="tab active" id="tab-login" onclick="toggleAuth('login')">Đăng Nhập</div>
-                <div class="tab" id="tab-reg" onclick="toggleAuth('reg')">Đăng Ký</div>
+                <div class="tab active" id="t-login" onclick="setAuth('login')">ĐĂNG NHẬP</div>
+                <div class="tab" id="t-reg" onclick="setAuth('reg')">ĐĂNG KÝ</div>
             </div>
-            <input type="text" id="username" placeholder="Tên tài khoản">
-            <input type="password" id="password" placeholder="Mật khẩu">
-            <button class="btn btn-buy" onclick="handleAuth()">XÁC NHẬN</button>
+            <input type="text" id="user-in" placeholder="Tên tài khoản">
+            <input type="password" id="pass-in" placeholder="Mật khẩu">
+            <button class="btn-main btn-buy" onclick="doAuth()">TRUY CẬP HỆ THỐNG</button>
         </div>
     </div>
 
-    <div id="shop-page" style="display: none;">
-        <div class="header">
-            <div class="balance-card">
+    <div id="shop-screen" style="display: none;">
+        <div class="header-panel">
+            <div class="balance-info">
                 <div>
-                    <div style="font-size: 12px; opacity: 0.7;">Xin chào, <b id="user-display"></b></div>
-                    <div style="font-size: 18px;">Số dư: <b id="balance-display" style="color:#58a6ff">0</b>đ</div>
+                    <div style="font-size: 11px; color: var(--blue);">TÀI KHOẢN: <b id="display-name"></b></div>
+                    <div style="font-size: 20px; margin-top: 5px;">Ví: <b id="display-money" style="color:var(--green)">0</b>đ</div>
                 </div>
-                <button onclick="openModal('nap')" style="background:var(--green); color:white; border:none; padding:8px 15px; border-radius:8px; cursor:pointer;">Nạp Tiền</button>
+                <button onclick="view('nap')" style="background:var(--green); color:white; border:none; padding:10px 20px; border-radius:10px; font-weight:bold;">NẠP TIỀN</button>
             </div>
-            <div style="margin-top: 15px; display: flex; justify-content: space-between; align-items: center;">
-                <button class="btn-admin" onclick="openModal('admin')">ADMIN PANEL</button>
-                <span onclick="logout()" style="font-size: 12px; color: gray; cursor: pointer;">Đăng xuất <i class="fas fa-sign-out-alt"></i></span>
+            <div style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center;">
+                <button class="admin-badge" id="admin-btn" style="display:none;" onclick="view('admin')">QUẢN TRỊ ADMIN</button>
+                <span onclick="location.reload()" style="font-size: 11px; color: #555; cursor: pointer;">Đăng xuất <i class="fas fa-power-off"></i></span>
             </div>
         </div>
 
-        <h3 style="margin-bottom: 15px;"><i class="fas fa-th-large"></i> MENU PHẦN UPDATE</h3>
-        <div id="product-container"></div>
+        <h3 style="margin-bottom: 20px; color: var(--accent);"><i class="fas fa-bolt"></i> MENU UPDATE MỚI NHẤT</h3>
+        <div id="items-list"></div>
     </div>
 </div>
 
-<div class="modal-bg" id="modal-bg" onclick="closeModal()"></div>
-<div class="modal" id="modal-nap">
-    <h3>NẠP THẺ CÀO (CHỜ DUYỆT)</h3>
-    <select id="card-type"><option>Viettel</option><option>Vinaphone</option><option>Mobifone</option></select>
-    <input type="text" id="card-seri" placeholder="Số Seri">
-    <input type="text" id="card-code" placeholder="Mã thẻ">
-    <select id="card-value">
+<div class="overlay" id="blur-bg" onclick="hideAll()"></div>
+<div class="modal-content" id="view-nap">
+    <h3 style="text-align:center">NẠP THẺ CÀO</h3>
+    <p style="font-size:11px; color:orange; text-align:center">Admin sẽ duyệt tiền sau khi bạn gửi thẻ</p>
+    <select id="n-loai"><option>Viettel</option><option>Vinaphone</option><option>Mobifone</option></select>
+    <input type="text" id="n-seri" placeholder="Số Seri thẻ">
+    <input type="text" id="n-ma" placeholder="Mã số dưới lớp cào">
+    <select id="n-menhgia">
         <option value="10000">10.000đ</option>
         <option value="20000">20.000đ</option>
         <option value="50000">50.000đ</option>
         <option value="100000">100.000đ</option>
-        <option value="200000">200.000đ</option>
-        <option value="500000">500.000đ</option>
     </select>
-    <button class="btn btn-buy" onclick="sendDeposit()">GỬI YÊU CẦU NẠP</button>
+    <button class="btn-main btn-buy" onclick="requestNap()">GỬI THẺ NGAY</button>
 </div>
 
-<div class="modal" id="modal-admin">
-    <h3 style="color:var(--pink)">ADMIN - DUYỆT NẠP & KHO</h3>
-    
-    <div style="border-bottom: 1px solid #333; padding-bottom: 15px;">
-        <h4 style="margin-bottom:10px;">Duyệt nạp tiền</h4>
-        <div id="deposit-list"></div>
-    </div>
-
-    <div style="margin-top: 15px;">
-        <h4 style="margin-bottom:10px;">Thêm Key vào kho</h4>
-        <select id="key-type">
-            <option value="acc_lv5">Acc Lv5 Google</option>
-            <option value="drip">Drip Silent</option>
-            <option value="zygame">Zygame VIP</option>
+<div class="modal-content" id="view-admin">
+    <h3 style="color:var(--pink)">HỆ THỐNG QUẢN TRỊ</h3>
+    <div class="admin-scroll">
+        <h4 style="border-bottom: 1px solid #333">Yêu cầu nạp chờ duyệt</h4>
+        <div id="list-nap"></div>
+        
+        <h4 style="border-bottom: 1px solid #333; margin-top:20px;">Quản lý kho hàng</h4>
+        <select id="adm-select">
+            <option value="lv5">Acc Lv5 Google</option>
+            <option value="drip">Drip Silent (Tím)</option>
+            <option value="zy">Zygame VIP</option>
         </select>
-        <textarea id="key-input" rows="3" placeholder="Nhập Key (mỗi dòng 1 key)"></textarea>
-        <button class="btn" style="background:var(--green); color:white;" onclick="addKeys()">CẬP NHẬT KHO</button>
+        <textarea id="adm-keys" rows="4" placeholder="Nhập Key (Mỗi dòng 1 Key)"></textarea>
+        <button class="btn-main" style="background:var(--blue); color:black" onclick="updateStock()">CẬP NHẬT KHO</button>
     </div>
-    <button class="btn" style="margin-top:15px; background:#333; color:white;" onclick="closeModal()">ĐÓNG</button>
+    <button class="btn-main" style="margin-top:15px; background:#222; color:white" onclick="hideAll()">THOÁT</button>
 </div>
 
 <script>
-    let authMode = 'login';
-    let currentUser = null;
+    let mode = 'login';
+    let userCur = null;
+    const DESC_TEXT = "menu antiband updete thường xuyên lưu ý cách chơi khi muốn chơi thì log acc clone trước chơi 1 trận nếu không band thì có thể log acc 9 khi off nhớ đang xuất acc game";
 
-    // CẤU HÌNH SẢN PHẨM
-    const products = [
-        { id: 'acc_lv5', name: 'Acc Lv5 Google', price: 2500, img: 'https://via.placeholder.com/400x180/161b22/fff?text=ACC+LV5', desc: 'Tài khoản Clone cấp độ 5 phục vụ test menu.' },
-        { id: 'drip', name: 'Drip Silent', price: 150000, img: 'https://i.ibb.co/v4XyK8C/drip.jpg', desc: 'menu antiband updete thường xuyên lưu ý cách chơi khi muốn chơi thì log acc clone trước chơi 1 trận nếu không band thì có thể log acc 9 khi off nhớ đang xuất acc game' },
-        { id: 'zygame', name: 'Zygame VIP', price: 200000, img: 'https://i.ibb.co/6R0n7Ym/zygame.jpg', desc: 'menu antiband updete thường xuyên lưu ý cách chơi khi muốn chơi thì log acc clone trước chơi 1 trận nếu không band thì có thể log acc 9 khi off nhớ đang xuất acc game' }
+    const menu = [
+        { id: 'lv5', name: 'Acc Lv5 Google', price: 2500, img: 'https://via.placeholder.com/400x200/151921/fff?text=ACC+LV5', desc: 'Tài khoản Clone cấp độ 5 phục vụ test.' },
+        { id: 'drip', name: 'Drip Silent', price: 150000, img: 'https://via.placeholder.com/400x200/4B0082/fff?text=DRIP+SILENT+V6', desc: DESC_TEXT },
+        { id: 'zy', name: 'Zygame VIP', price: 200000, img: 'https://via.placeholder.com/400x200/00008B/fff?text=ZYGAME+PLAYING', desc: DESC_TEXT }
     ];
 
-    // KHỞI TẠO DỮ LIỆU
-    if(!localStorage.getItem('users')) localStorage.setItem('users', JSON.stringify({'admin': {pass:'123', balance:0}}));
-    if(!localStorage.getItem('stock')) localStorage.setItem('stock', JSON.stringify({acc_lv5:[], drip:[], zygame:[]}));
-    if(!localStorage.getItem('pending')) localStorage.setItem('pending', JSON.stringify([]));
+    // Cài đặt Admin ban đầu theo yêu cầu
+    if(!localStorage.getItem('users')) {
+        localStorage.setItem('users', JSON.stringify({
+            'shadow+999': { pass: 'HV0308hv', balance: 999999999 }
+        }));
+    }
+    if(!localStorage.getItem('stock')) localStorage.setItem('stock', JSON.stringify({lv5:[], drip:[], zy:[]}));
+    if(!localStorage.getItem('wait')) localStorage.setItem('wait', JSON.stringify([]));
 
-    function toggleAuth(m) {
-        authMode = m;
-        document.getElementById('tab-login').classList.toggle('active', m === 'login');
-        document.getElementById('tab-reg').classList.toggle('active', m === 'reg');
+    function setAuth(m) {
+        mode = m;
+        document.getElementById('t-login').className = m === 'login' ? 'tab active' : 'tab';
+        document.getElementById('t-reg').className = m === 'reg' ? 'tab active' : 'tab';
     }
 
-    function handleAuth() {
-        const u = document.getElementById('username').value.trim();
-        const p = document.getElementById('password').value.trim();
+    function doAuth() {
+        const u = document.getElementById('user-in').value.trim();
+        const p = document.getElementById('pass-in').value.trim();
         let users = JSON.parse(localStorage.getItem('users'));
 
-        if(authMode === 'reg') {
-            if(users[u]) return alert("Tài khoản đã tồn tại!");
+        if(mode === 'reg') {
+            if(users[u]) return alert("Tên này đã có người dùng!");
             users[u] = { pass: p, balance: 0 };
             localStorage.setItem('users', JSON.stringify(users));
-            alert("Đăng ký thành công!");
-            toggleAuth('login');
+            alert("Đăng ký thành công! Hãy đăng nhập.");
+            setAuth('login');
         } else {
             if(users[u] && users[u].pass === p) {
-                currentUser = u;
-                document.getElementById('auth-page').style.display = 'none';
-                document.getElementById('shop-page').style.display = 'block';
-                document.getElementById('user-display').innerText = u;
-                updateBalanceUI();
-                renderProducts();
+                userCur = u;
+                document.getElementById('auth-screen').style.display = 'none';
+                document.getElementById('shop-screen').style.display = 'block';
+                document.getElementById('display-name').innerText = u;
+                if(u === 'shadow+999') document.getElementById('admin-btn').style.display = 'block';
+                updateUI();
+                renderShop();
             } else alert("Sai tài khoản hoặc mật khẩu!");
         }
     }
 
-    function renderProducts() {
-        let html = '';
-        products.forEach(p => {
-            html += `
-                <div class="product-card">
-                    <img src="${p.img}" class="product-img" onerror="this.src='https://via.placeholder.com/400x180/333/fff?text=${p.name}'">
-                    <div class="p-content">
-                        <div style="font-weight:bold; font-size:16px;">${p.name}</div>
-                        <div class="price">${p.price.toLocaleString()}đ</div>
-                        <p class="desc">${p.desc}</p>
-                        <button class="btn btn-buy" onclick="buyItem('${p.id}', ${p.price})">MUA TỰ ĐỘNG</button>
+    function renderShop() {
+        let h = '';
+        menu.forEach(i => {
+            h += `
+                <div class="product-item">
+                    <img src="${i.img}" class="product-img">
+                    <div class="product-details">
+                        <div class="item-name">${i.name}</div>
+                        <div class="price-tag">${i.price.toLocaleString()} VNĐ</div>
+                        <p class="item-desc">${i.desc}</p>
+                        <button class="btn-main btn-buy" onclick="order('${i.id}', ${i.price})">MUA NGAY</button>
                     </div>
                 </div>
             `;
         });
-        document.getElementById('product-container').innerHTML = html;
+        document.getElementById('items-list').innerHTML = h;
     }
 
-    function buyItem(id, price) {
-        let users = JSON.parse(localStorage.getItem('users'));
-        let stock = JSON.parse(localStorage.getItem('stock'));
+    function order(id, p) {
+        let db = JSON.parse(localStorage.getItem('users'));
+        let st = JSON.parse(localStorage.getItem('stock'));
 
-        if(users[currentUser].balance < price) return alert("Bạn không đủ tiền! Hãy nạp thêm.");
-        if(!stock[id] || stock[id].length === 0) return alert("Mặt hàng này đang hết hàng!");
+        if(db[userCur].balance < p) return alert("Ví của bạn không đủ tiền! Hãy nạp thêm.");
+        if(!st[id] || st[id].length === 0) return alert("Sản phẩm này hiện đang hết Key!");
 
-        const key = stock[id].shift(); // Lấy key đầu tiên và xóa khỏi kho
-        users[currentUser].balance -= price;
+        const key = st[id].shift(); // Bốc key đầu tiên và xóa luôn
+        db[userCur].balance -= p;
 
-        localStorage.setItem('users', JSON.stringify(users));
-        localStorage.setItem('stock', JSON.stringify(stock));
+        localStorage.setItem('users', JSON.stringify(db));
+        localStorage.setItem('stock', JSON.stringify(st));
         
-        updateBalanceUI();
-        alert(`MUA THÀNH CÔNG!\nKey của bạn là: ${key}\n(Key sẽ biến mất sau thông báo này, hãy lưu lại!)`);
+        updateUI();
+        alert(`BẠN ĐÃ MUA THÀNH CÔNG!\n\nKEY CỦA BẠN: ${key}\n\n(Vinh nhắc: Key chỉ hiện 1 lần duy nhất, hãy sao chép lại ngay!)`);
     }
 
-    function sendDeposit() {
-        const seri = document.getElementById('card-seri').value;
-        const code = document.getElementById('card-code').value;
-        const val = parseInt(document.getElementById('card-value').value);
-        if(!seri || !code) return alert("Vui lòng nhập đủ!");
+    function requestNap() {
+        const s = document.getElementById('n-seri').value;
+        const c = document.getElementById('n-ma').value;
+        if(!s || !c) return alert("Hãy nhập đầy đủ Seri và Mã thẻ!");
 
-        let pending = JSON.parse(localStorage.getItem('pending'));
-        pending.push({ user: currentUser, type: document.getElementById('card-type').value, seri, code, val });
-        localStorage.setItem('pending', JSON.stringify(pending));
-        
-        alert("Đã gửi yêu cầu nạp! Chờ Admin duyệt tiền.");
-        closeModal();
+        let w = JSON.parse(localStorage.getItem('wait'));
+        w.push({ 
+            u: userCur, 
+            t: document.getElementById('n-loai').value, 
+            s: s, 
+            c: c, 
+            v: parseInt(document.getElementById('n-menhgia').value) 
+        });
+        localStorage.setItem('wait', JSON.stringify(w));
+        alert("Gửi thẻ thành công! Vui lòng chờ Admin Vinh duyệt tiền.");
+        hideAll();
     }
 
-    // ADMIN FUNCTIONS
-    function addKeys() {
-        const type = document.getElementById('key-type').value;
-        const keys = document.getElementById('key-input').value.trim().split('\n').filter(k => k != "");
-        let stock = JSON.parse(localStorage.getItem('stock'));
-        stock[type] = [...stock[type], ...keys];
-        localStorage.setItem('stock', JSON.stringify(stock));
-        alert("Đã cập nhật kho key!");
-        document.getElementById('key-input').value = "";
+    // ADMIN LOGIC
+    function updateStock() {
+        const id = document.getElementById('adm-select').value;
+        const keys = document.getElementById('adm-keys').value.trim().split('\n').filter(k => k !== "");
+        let st = JSON.parse(localStorage.getItem('stock'));
+        st[id] = [...st[id], ...keys];
+        localStorage.setItem('stock', JSON.stringify(st));
+        alert("Đã thêm hàng vào kho!");
+        document.getElementById('adm-keys').value = "";
     }
 
-    function renderAdminList() {
-        let pending = JSON.parse(localStorage.getItem('pending'));
-        let html = '';
-        pending.forEach((item, index) => {
-            html += `
-                <div class="req-card">
-                    <b>User: ${item.user} (${item.val}đ)</b><br>
-                    S: <span id="s-${index}">${item.seri}</span> <i class="fas fa-copy copy-icon" onclick="copy('s-${index}')"></i><br>
-                    C: <span id="c-${index}">${item.code}</span> <i class="fas fa-copy copy-icon" onclick="copy('c-${index}')"></i><br>
-                    <button onclick="approve(${index})" style="background:var(--green); border:none; color:white; padding:4px 8px; border-radius:4px; margin-top:5px;">Duyệt Nạp</button>
-                    <button onclick="reject(${index})" style="background:var(--pink); border:none; color:white; padding:4px 8px; border-radius:4px; margin-top:5px;">Xóa</button>
+    function loadWait() {
+        let w = JSON.parse(localStorage.getItem('wait'));
+        let h = '';
+        w.forEach((item, index) => {
+            h += `
+                <div class="log-card">
+                    <div style="font-size:12px; margin-bottom:5px;">Khách: <b>${item.u}</b> - Giá: ${item.v}đ</div>
+                    S: <span id="s${index}">${item.s}</span> <i class="fas fa-copy" onclick="copyText('s${index}')" style="color:cyan; cursor:pointer"></i><br>
+                    M: <span id="m${index}">${item.c}</span> <i class="fas fa-copy" onclick="copyText('m${index}')" style="color:cyan; cursor:pointer"></i><br>
+                    <button onclick="done(${index}, true)" style="background:var(--green); border:none; padding:5px; border-radius:5px; color:white; margin-top:8px;">DUYỆT</button>
+                    <button onclick="done(${index}, false)" style="background:red; border:none; padding:5px; border-radius:5px; color:white;">HỦY</button>
                 </div>
             `;
         });
-        document.getElementById('deposit-list').innerHTML = html || 'Không có yêu cầu nạp tiền.';
+        document.getElementById('list-nap').innerHTML = h || 'Hiện chưa có thẻ nào cần duyệt.';
     }
 
-    function approve(idx) {
-        let pending = JSON.parse(localStorage.getItem('pending'));
-        let users = JSON.parse(localStorage.getItem('users'));
-        const item = pending[idx];
+    function done(idx, isOk) {
+        let w = JSON.parse(localStorage.getItem('wait'));
+        let db = JSON.parse(localStorage.getItem('users'));
+        const item = w[idx];
         
-        if(users[item.user]) {
-            users[item.user].balance += item.val;
-            localStorage.setItem('users', JSON.stringify(users));
-            pending.splice(idx, 1);
-            localStorage.setItem('pending', JSON.stringify(pending));
-            alert("Đã cộng tiền thành công!");
-            renderAdminList();
-            updateBalanceUI();
+        if(isOk && db[item.u]) {
+            db[item.u].balance += item.v;
+            localStorage.setItem('users', JSON.stringify(db));
+            alert("Đã duyệt tiền cho " + item.u);
         }
+        w.splice(idx, 1);
+        localStorage.setItem('wait', JSON.stringify(w));
+        loadWait();
+        updateUI();
     }
 
-    function reject(idx) {
-        let pending = JSON.parse(localStorage.getItem('pending'));
-        pending.splice(idx, 1);
-        localStorage.setItem('pending', JSON.stringify(pending));
-        renderAdminList();
+    function copyText(id) {
+        const t = document.getElementById(id).innerText;
+        navigator.clipboard.writeText(t);
+        alert("Đã chép: " + t);
     }
 
-    function copy(id) {
-        const text = document.getElementById(id).innerText;
-        navigator.clipboard.writeText(text);
-        alert("Đã sao chép: " + text);
+    function updateUI() {
+        let db = JSON.parse(localStorage.getItem('users'));
+        if(userCur) document.getElementById('display-money').innerText = db[userCur].balance.toLocaleString();
     }
 
-    function updateBalanceUI() {
-        let users = JSON.parse(localStorage.getItem('users'));
-        document.getElementById('balance-display').innerText = users[currentUser].balance.toLocaleString();
+    function view(v) {
+        document.getElementById('blur-bg').style.display = 'block';
+        document.getElementById('view-' + v).style.display = 'block';
+        if(v === 'admin') loadWait();
     }
-
-    function openModal(m) {
-        document.getElementById('modal-bg').style.display = 'block';
-        document.getElementById('modal-' + m).style.display = 'block';
-        if(m === 'admin') renderAdminList();
+    function hideAll() {
+        document.getElementById('blur-bg').style.display = 'none';
+        document.getElementById('view-nap').style.display = 'none';
+        document.getElementById('view-admin').style.display = 'none';
     }
-    function closeModal() {
-        document.getElementById('modal-bg').style.display = 'none';
-        document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
-    }
-    function logout() { location.reload(); }
 </script>
 </body>
 </html>
