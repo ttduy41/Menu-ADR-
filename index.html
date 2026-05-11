@@ -3,265 +3,284 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop Uy Tín Hàng Đầu</title>
+    <title>Cyber Shop - Đỗ Hoàng Vinh</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --bg-color: #0b0e1a;
-            --card-bg: #161b33;
-            --accent-color: #7d5fff;
-            --text-color: #ffffff;
-            --neon-pink: #ff00ff;
+            --bg: #0d1117; --card: #161b22; --accent: #8957e5; --text: #c9d1d9; --pink: #da36a8; --green: #238636;
         }
+        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; justify-content: center; }
+        .app { width: 100%; max-width: 480px; padding: 15px; min-height: 100vh; }
+        
+        /* Auth Styles */
+        .auth-container { background: var(--card); padding: 25px; border-radius: 15px; border: 1px solid var(--accent); margin-top: 50px; }
+        .auth-tabs { display: flex; margin-bottom: 20px; border-bottom: 1px solid #30363d; }
+        .tab { flex: 1; text-align: center; padding: 10px; cursor: pointer; opacity: 0.5; }
+        .tab.active { opacity: 1; border-bottom: 2px solid var(--accent); color: var(--accent); }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 20px;
-        }
+        /* Shop Styles */
+        .header { background: linear-gradient(135deg, #1e2448, #161b33); padding: 20px; border-radius: 20px; border: 1px solid var(--accent); margin-bottom: 20px; }
+        .balance-card { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.3); padding: 12px; border-radius: 12px; }
+        
+        .product-card { background: var(--card); border-radius: 15px; overflow: hidden; margin-bottom: 20px; border: 1px solid #30363d; transition: 0.3s; }
+        .product-card:hover { border-color: var(--accent); }
+        .product-img { width: 100%; height: 180px; object-fit: cover; }
+        .p-content { padding: 15px; }
+        .price { color: #58a6ff; font-size: 1.3rem; font-weight: bold; margin: 10px 0; }
+        .desc { font-size: 13px; color: #8b949e; line-height: 1.5; }
 
-        .container { max-width: 600px; margin: auto; }
+        input, select, textarea { width: 100%; padding: 12px; margin: 8px 0; background: #010409; border: 1px solid #30363d; color: white; border-radius: 8px; box-sizing: border-box; }
+        .btn { width: 100%; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        .btn-buy { background: var(--accent); color: white; }
+        .btn-admin { background: none; color: var(--pink); border: 1px solid var(--pink); font-size: 11px; padding: 4px 8px; width: auto; }
 
-        /* Header section */
-        .header-card {
-            background: linear-gradient(145deg, #1e2448, #161b33);
-            padding: 20px;
-            border-radius: 20px;
-            text-align: center;
-            margin-bottom: 20px;
-            border: 1px solid var(--accent-color);
-        }
-
-        .balance-box {
-            display: flex;
-            justify-content: space-between;
-            background: rgba(255,255,255,0.05);
-            padding: 10px 20px;
-            border-radius: 15px;
-            margin-bottom: 15px;
-        }
-
-        /* Product section */
-        .section-title {
-            font-size: 1.2rem;
-            margin: 20px 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .product-card {
-            background: var(--card-bg);
-            border-radius: 15px;
-            overflow: hidden;
-            margin-bottom: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .product-img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            border-bottom: 2px solid var(--accent-color);
-        }
-
-        .product-info { padding: 15px; }
-
-        .price {
-            color: #00ff88;
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-
-        .btn-buy {
-            background: var(--accent-color);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 10px;
-            font-weight: bold;
-        }
-
-        /* Admin Panel */
-        #admin-panel {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #1e2448;
-            padding: 25px;
-            border-radius: 15px;
-            border: 2px solid var(--neon-pink);
-            z-index: 1000;
-            width: 90%;
-            max-width: 400px;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            background: #0b0e1a;
-            border: 1px solid var(--accent-color);
-            color: white;
-            box-sizing: border-box;
-        }
-
-        .overlay {
-            display: none;
-            position: fixed;
-            top:0; left:0; width:100%; height:100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 999;
-        }
-
-        .description-box {
-            font-size: 0.85rem;
-            color: #aaa;
-            margin-top: 10px;
-            line-height: 1.4;
-        }
+        /* Admin Modal */
+        .modal-bg { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.9); z-index: 100; }
+        .modal { display: none; position: fixed; top:50%; left:50%; transform: translate(-50%, -50%); background: var(--card); padding: 20px; border-radius: 15px; width: 90%; max-width: 400px; z-index: 101; border: 1px solid var(--accent); max-height: 85vh; overflow-y: auto; }
+        .req-card { background: #0d1117; padding: 12px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid var(--accent); font-size: 13px; }
+        .copy-icon { color: #58a6ff; cursor: pointer; margin-left: 5px; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header-card">
-        <div class="balance-box">
-            <span>Số dư: <b id="user-balance">500.000</b>đ</span>
-            <i class="fas fa-wallet"></i>
+<div class="app">
+    <div id="auth-page">
+        <div class="auth-container">
+            <h2 style="text-align: center; color: var(--accent);">CYBER SHOP</h2>
+            <div class="auth-tabs">
+                <div class="tab active" id="tab-login" onclick="toggleAuth('login')">Đăng Nhập</div>
+                <div class="tab" id="tab-reg" onclick="toggleAuth('reg')">Đăng Ký</div>
+            </div>
+            <input type="text" id="username" placeholder="Tên tài khoản">
+            <input type="password" id="password" placeholder="Mật khẩu">
+            <button class="btn btn-buy" onclick="handleAuth()">XÁC NHẬN</button>
         </div>
-        <h2 style="margin: 10px 0;">SHOP UY TÍN HÀNG ĐẦU</h2>
-        <p style="font-size: 0.9rem; opacity: 0.8;">Chào mừng <b>Vinh</b> quay trở lại!</p>
-        <button onclick="showAdmin()" style="background:none; border:none; color:#333; font-size:10px;">Admin Mode</button>
     </div>
 
-    <div class="section-title">
-        <i class="fas fa-boxes"></i> DANH MỤC MENU UPDATE
-    </div>
-
-    <div id="product-list">
-        <div class="product-card">
-            <div class="product-info">
-                <h3>Acc Lv5 Google</h3>
-                <span class="price">2.500đ</span>
-                <p class="description-box">Tài khoản Clone cấp độ 5 phục vụ test menu.</p>
-                <button class="btn-buy" onclick="buyProduct('acc_lv5', 2500)">MUA NGAY</button>
+    <div id="shop-page" style="display: none;">
+        <div class="header">
+            <div class="balance-card">
+                <div>
+                    <div style="font-size: 12px; opacity: 0.7;">Xin chào, <b id="user-display"></b></div>
+                    <div style="font-size: 18px;">Số dư: <b id="balance-display" style="color:#58a6ff">0</b>đ</div>
+                </div>
+                <button onclick="openModal('nap')" style="background:var(--green); color:white; border:none; padding:8px 15px; border-radius:8px; cursor:pointer;">Nạp Tiền</button>
+            </div>
+            <div style="margin-top: 15px; display: flex; justify-content: space-between; align-items: center;">
+                <button class="btn-admin" onclick="openModal('admin')">ADMIN PANEL</button>
+                <span onclick="logout()" style="font-size: 12px; color: gray; cursor: pointer;">Đăng xuất <i class="fas fa-sign-out-alt"></i></span>
             </div>
         </div>
 
-        <div class="product-card">
-            <img src="https://i.imgur.com/your-purple-cup-link.jpg" alt="Drip Silent" class="product-img" onerror="this.src='https://via.placeholder.com/400x180/7d5fff/ffffff?text=DRIP+SILENT'">
-            <div class="product-info">
-                <h3>Drip Silent (Purple Cup)</h3>
-                <span class="price">150.000đ</span>
-                <p class="description-box">Menu antiband update thường xuyên. Lưu ý: Log acc clone trước, nếu không ban mới log acc chính. Nhớ đăng xuất khi off.</p>
-                <button class="btn-buy" onclick="buyProduct('drip', 150000)">MUA NGAY</button>
-            </div>
-        </div>
-
-        <div class="product-card">
-            <img src="https://i.imgur.com/your-gameplay-link.jpg" alt="Zygame" class="product-img" onerror="this.src='https://via.placeholder.com/400x180/00ff88/ffffff?text=ZYGAME+PLAYING'">
-            <div class="product-info">
-                <h3>Zygame VIP</h3>
-                <span class="price">200.000đ</span>
-                <p class="description-box">Menu antiband update thường xuyên. Lưu ý: Log acc clone trước, nếu không ban mới log acc chính. Nhớ đăng xuất khi off.</p>
-                <button class="btn-buy" onclick="buyProduct('zygame', 200000)">MUA NGAY</button>
-            </div>
-        </div>
+        <h3 style="margin-bottom: 15px;"><i class="fas fa-th-large"></i> MENU PHẦN UPDATE</h3>
+        <div id="product-container"></div>
     </div>
 </div>
 
-<div class="overlay" id="overlay"></div>
-<div id="admin-panel">
-    <h3 style="color: var(--neon-pink); text-align: center;">QUẢN TRỊ VIÊN</h3>
-    <label>Chọn mặt hàng:</label>
-    <select id="admin-product-select">
-        <option value="acc_lv5">Acc Lv5 Google</option>
-        <option value="drip">Drip Silent</option>
-        <option value="zygame">Zygame VIP</option>
+<div class="modal-bg" id="modal-bg" onclick="closeModal()"></div>
+<div class="modal" id="modal-nap">
+    <h3>NẠP THẺ CÀO (CHỜ DUYỆT)</h3>
+    <select id="card-type"><option>Viettel</option><option>Vinaphone</option><option>Mobifone</option></select>
+    <input type="text" id="card-seri" placeholder="Số Seri">
+    <input type="text" id="card-code" placeholder="Mã thẻ">
+    <select id="card-value">
+        <option value="10000">10.000đ</option>
+        <option value="20000">20.000đ</option>
+        <option value="50000">50.000đ</option>
+        <option value="100000">100.000đ</option>
+        <option value="200000">200.000đ</option>
+        <option value="500000">500.000đ</option>
     </select>
-    <label>Nhập Key (Mỗi key 1 dòng):</label>
-    <textarea id="admin-key-input" rows="5" style="width:100%; background:#000; color:#0f0; border:1px solid #7d5fff;"></textarea>
-    <button class="btn-buy" style="background: #2ecc71;" onclick="addStock()">CẬP NHẬT KHO</button>
-    <button class="btn-buy" style="background: #e74c3c;" onclick="hideAdmin()">ĐÓNG</button>
+    <button class="btn btn-buy" onclick="sendDeposit()">GỬI YÊU CẦU NẠP</button>
+</div>
+
+<div class="modal" id="modal-admin">
+    <h3 style="color:var(--pink)">ADMIN - DUYỆT NẠP & KHO</h3>
+    
+    <div style="border-bottom: 1px solid #333; padding-bottom: 15px;">
+        <h4 style="margin-bottom:10px;">Duyệt nạp tiền</h4>
+        <div id="deposit-list"></div>
+    </div>
+
+    <div style="margin-top: 15px;">
+        <h4 style="margin-bottom:10px;">Thêm Key vào kho</h4>
+        <select id="key-type">
+            <option value="acc_lv5">Acc Lv5 Google</option>
+            <option value="drip">Drip Silent</option>
+            <option value="zygame">Zygame VIP</option>
+        </select>
+        <textarea id="key-input" rows="3" placeholder="Nhập Key (mỗi dòng 1 key)"></textarea>
+        <button class="btn" style="background:var(--green); color:white;" onclick="addKeys()">CẬP NHẬT KHO</button>
+    </div>
+    <button class="btn" style="margin-top:15px; background:#333; color:white;" onclick="closeModal()">ĐÓNG</button>
 </div>
 
 <script>
-    // Khởi tạo kho hàng nếu chưa có
-    if(!localStorage.getItem('shop_stock')) {
-        localStorage.setItem('shop_stock', JSON.stringify({
-            acc_lv5: [],
-            drip: [],
-            zygame: []
-        }));
+    let authMode = 'login';
+    let currentUser = null;
+
+    // CẤU HÌNH SẢN PHẨM
+    const products = [
+        { id: 'acc_lv5', name: 'Acc Lv5 Google', price: 2500, img: 'https://via.placeholder.com/400x180/161b22/fff?text=ACC+LV5', desc: 'Tài khoản Clone cấp độ 5 phục vụ test menu.' },
+        { id: 'drip', name: 'Drip Silent', price: 150000, img: 'https://i.ibb.co/v4XyK8C/drip.jpg', desc: 'menu antiband updete thường xuyên lưu ý cách chơi khi muốn chơi thì log acc clone trước chơi 1 trận nếu không band thì có thể log acc 9 khi off nhớ đang xuất acc game' },
+        { id: 'zygame', name: 'Zygame VIP', price: 200000, img: 'https://i.ibb.co/6R0n7Ym/zygame.jpg', desc: 'menu antiband updete thường xuyên lưu ý cách chơi khi muốn chơi thì log acc clone trước chơi 1 trận nếu không band thì có thể log acc 9 khi off nhớ đang xuất acc game' }
+    ];
+
+    // KHỞI TẠO DỮ LIỆU
+    if(!localStorage.getItem('users')) localStorage.setItem('users', JSON.stringify({'admin': {pass:'123', balance:0}}));
+    if(!localStorage.getItem('stock')) localStorage.setItem('stock', JSON.stringify({acc_lv5:[], drip:[], zygame:[]}));
+    if(!localStorage.getItem('pending')) localStorage.setItem('pending', JSON.stringify([]));
+
+    function toggleAuth(m) {
+        authMode = m;
+        document.getElementById('tab-login').classList.toggle('active', m === 'login');
+        document.getElementById('tab-reg').classList.toggle('active', m === 'reg');
     }
 
-    let balance = 500000;
+    function handleAuth() {
+        const u = document.getElementById('username').value.trim();
+        const p = document.getElementById('password').value.trim();
+        let users = JSON.parse(localStorage.getItem('users'));
 
-    function showAdmin() {
-        document.getElementById('admin-panel').style.display = 'block';
-        document.getElementById('overlay').style.display = 'block';
-    }
-
-    function hideAdmin() {
-        document.getElementById('admin-panel').style.display = 'none';
-        document.getElementById('overlay').style.display = 'none';
-    }
-
-    // Admin thêm hàng vào kho
-    function addStock() {
-        const type = document.getElementById('admin-product-select').value;
-        const keysText = document.getElementById('admin-key-input').value.trim();
-        
-        if(!keysText) return alert("Vui lòng nhập Key!");
-
-        let stock = JSON.parse(localStorage.getItem('shop_stock'));
-        const newKeys = keysText.split('\n').filter(k => k.trim() !== "");
-        
-        stock[type] = [...stock[type], ...newKeys];
-        localStorage.setItem('shop_stock', JSON.stringify(stock));
-        
-        alert(`Đã thêm ${newKeys.length} mặt hàng vào kho!`);
-        document.getElementById('admin-key-input').value = "";
-        hideAdmin();
-    }
-
-    // Khách hàng mua hàng
-    function buyProduct(type, price) {
-        if (balance < price) {
-            alert("Bạn không đủ tiền! Vui lòng nạp thêm.");
-            return;
+        if(authMode === 'reg') {
+            if(users[u]) return alert("Tài khoản đã tồn tại!");
+            users[u] = { pass: p, balance: 0 };
+            localStorage.setItem('users', JSON.stringify(users));
+            alert("Đăng ký thành công!");
+            toggleAuth('login');
+        } else {
+            if(users[u] && users[u].pass === p) {
+                currentUser = u;
+                document.getElementById('auth-page').style.display = 'none';
+                document.getElementById('shop-page').style.display = 'block';
+                document.getElementById('user-display').innerText = u;
+                updateBalanceUI();
+                renderProducts();
+            } else alert("Sai tài khoản hoặc mật khẩu!");
         }
-
-        let stock = JSON.parse(localStorage.getItem('shop_stock'));
-        
-        if (!stock[type] || stock[type].length === 0) {
-            alert("Mặt hàng này hiện đang hết hàng!");
-            return;
-        }
-
-        // Lấy key đầu tiên
-        const purchasedKey = stock[type].shift(); 
-        
-        // Cập nhật lại kho (Xóa key vừa mua)
-        localStorage.setItem('shop_stock', JSON.stringify(stock));
-
-        // Trừ tiền
-        balance -= price;
-        document.getElementById('user-balance').innerText = balance.toLocaleString();
-
-        // Hiển thị Key cho khách (Chỉ hiện 1 lần này)
-        alert(`MUA THÀNH CÔNG!\nKey của bạn là: ${purchasedKey}\n\nLưu ý: Key này chỉ xuất hiện 1 lần, hãy lưu lại ngay!`);
-        console.log("Key đã mua:", purchasedKey);
     }
+
+    function renderProducts() {
+        let html = '';
+        products.forEach(p => {
+            html += `
+                <div class="product-card">
+                    <img src="${p.img}" class="product-img" onerror="this.src='https://via.placeholder.com/400x180/333/fff?text=${p.name}'">
+                    <div class="p-content">
+                        <div style="font-weight:bold; font-size:16px;">${p.name}</div>
+                        <div class="price">${p.price.toLocaleString()}đ</div>
+                        <p class="desc">${p.desc}</p>
+                        <button class="btn btn-buy" onclick="buyItem('${p.id}', ${p.price})">MUA TỰ ĐỘNG</button>
+                    </div>
+                </div>
+            `;
+        });
+        document.getElementById('product-container').innerHTML = html;
+    }
+
+    function buyItem(id, price) {
+        let users = JSON.parse(localStorage.getItem('users'));
+        let stock = JSON.parse(localStorage.getItem('stock'));
+
+        if(users[currentUser].balance < price) return alert("Bạn không đủ tiền! Hãy nạp thêm.");
+        if(!stock[id] || stock[id].length === 0) return alert("Mặt hàng này đang hết hàng!");
+
+        const key = stock[id].shift(); // Lấy key đầu tiên và xóa khỏi kho
+        users[currentUser].balance -= price;
+
+        localStorage.setItem('users', JSON.stringify(users));
+        localStorage.setItem('stock', JSON.stringify(stock));
+        
+        updateBalanceUI();
+        alert(`MUA THÀNH CÔNG!\nKey của bạn là: ${key}\n(Key sẽ biến mất sau thông báo này, hãy lưu lại!)`);
+    }
+
+    function sendDeposit() {
+        const seri = document.getElementById('card-seri').value;
+        const code = document.getElementById('card-code').value;
+        const val = parseInt(document.getElementById('card-value').value);
+        if(!seri || !code) return alert("Vui lòng nhập đủ!");
+
+        let pending = JSON.parse(localStorage.getItem('pending'));
+        pending.push({ user: currentUser, type: document.getElementById('card-type').value, seri, code, val });
+        localStorage.setItem('pending', JSON.stringify(pending));
+        
+        alert("Đã gửi yêu cầu nạp! Chờ Admin duyệt tiền.");
+        closeModal();
+    }
+
+    // ADMIN FUNCTIONS
+    function addKeys() {
+        const type = document.getElementById('key-type').value;
+        const keys = document.getElementById('key-input').value.trim().split('\n').filter(k => k != "");
+        let stock = JSON.parse(localStorage.getItem('stock'));
+        stock[type] = [...stock[type], ...keys];
+        localStorage.setItem('stock', JSON.stringify(stock));
+        alert("Đã cập nhật kho key!");
+        document.getElementById('key-input').value = "";
+    }
+
+    function renderAdminList() {
+        let pending = JSON.parse(localStorage.getItem('pending'));
+        let html = '';
+        pending.forEach((item, index) => {
+            html += `
+                <div class="req-card">
+                    <b>User: ${item.user} (${item.val}đ)</b><br>
+                    S: <span id="s-${index}">${item.seri}</span> <i class="fas fa-copy copy-icon" onclick="copy('s-${index}')"></i><br>
+                    C: <span id="c-${index}">${item.code}</span> <i class="fas fa-copy copy-icon" onclick="copy('c-${index}')"></i><br>
+                    <button onclick="approve(${index})" style="background:var(--green); border:none; color:white; padding:4px 8px; border-radius:4px; margin-top:5px;">Duyệt Nạp</button>
+                    <button onclick="reject(${index})" style="background:var(--pink); border:none; color:white; padding:4px 8px; border-radius:4px; margin-top:5px;">Xóa</button>
+                </div>
+            `;
+        });
+        document.getElementById('deposit-list').innerHTML = html || 'Không có yêu cầu nạp tiền.';
+    }
+
+    function approve(idx) {
+        let pending = JSON.parse(localStorage.getItem('pending'));
+        let users = JSON.parse(localStorage.getItem('users'));
+        const item = pending[idx];
+        
+        if(users[item.user]) {
+            users[item.user].balance += item.val;
+            localStorage.setItem('users', JSON.stringify(users));
+            pending.splice(idx, 1);
+            localStorage.setItem('pending', JSON.stringify(pending));
+            alert("Đã cộng tiền thành công!");
+            renderAdminList();
+            updateBalanceUI();
+        }
+    }
+
+    function reject(idx) {
+        let pending = JSON.parse(localStorage.getItem('pending'));
+        pending.splice(idx, 1);
+        localStorage.setItem('pending', JSON.stringify(pending));
+        renderAdminList();
+    }
+
+    function copy(id) {
+        const text = document.getElementById(id).innerText;
+        navigator.clipboard.writeText(text);
+        alert("Đã sao chép: " + text);
+    }
+
+    function updateBalanceUI() {
+        let users = JSON.parse(localStorage.getItem('users'));
+        document.getElementById('balance-display').innerText = users[currentUser].balance.toLocaleString();
+    }
+
+    function openModal(m) {
+        document.getElementById('modal-bg').style.display = 'block';
+        document.getElementById('modal-' + m).style.display = 'block';
+        if(m === 'admin') renderAdminList();
+    }
+    function closeModal() {
+        document.getElementById('modal-bg').style.display = 'none';
+        document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+    }
+    function logout() { location.reload(); }
 </script>
-
 </body>
 </html>
